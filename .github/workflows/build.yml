@@ -1,0 +1,28 @@
+name: Build MT5Bridge DLL
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup MSVC
+      uses: microsoft/setup-msbuild@v2
+
+    - name: Build DLL
+      shell: cmd
+      run: |
+        call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+        cl /LD /EHsc MT5Bridge.cpp /Fe:MT5Bridge.dll /link /DEF:MT5Bridge.def
+
+    - name: Upload DLL
+      uses: actions/upload-artifact@v4
+      with:
+        name: MT5Bridge-DLL
+        path: MT5Bridge.dll
