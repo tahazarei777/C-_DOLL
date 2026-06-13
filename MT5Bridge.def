@@ -1,0 +1,6 @@
+LIBRARY MT5Bridge
+EXPORTS
+    ConnectPipe
+    SendData
+    ReceiveData
+    DisconnectPipe
